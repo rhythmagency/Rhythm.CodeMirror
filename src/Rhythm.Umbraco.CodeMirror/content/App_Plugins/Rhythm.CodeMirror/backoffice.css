@@ -1,0 +1,12 @@
+﻿.rcm-editor {
+}
+
+.rcm-editor .rcm-editor__editor-frame {
+    display: inline-block;
+    width: 100%;
+    min-height: 200px;
+}
+
+.rcm-editor .rcm-editor__toolbar {
+    margin-bottom: 12px;
+}

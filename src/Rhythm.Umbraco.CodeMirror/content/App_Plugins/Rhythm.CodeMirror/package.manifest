@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json.schemastore.org/package.manifest",
+  "css": [
+    "~/App_Plugins/Rhythm.CodeMirror/backoffice.css"
+  ],
+  "javascript": [
+    "~/App_Plugins/Rhythm.CodeMirror/backoffice.js"
+  ],
+  "propertyEditors": [
+    {
+      /*this must be a unique alias*/
+      "alias": "Rhythm.CodeMirror",
+      /*the name*/
+      "name": "CodeMirror Editor",
+      /*the icon*/
+      "icon": "icon-code",
+      /*grouping for "Select editor" dialog*/
+      "group": "Rich Content",
+      /*the HTML file we will load for the editor*/
+      "editor": {
+        "view": "~/App_Plugins/Rhythm.CodeMirror/property-editor.html",
+        "valueType": "TEXT"
+      },
+      "prevalues": {
+        "fields": [
+          {
+            "label": "Language",
+            "description": "The code language this field should expect.",
+            "key": "language",
+            "view": "~/App_Plugins/Rhythm.CodeMirror/prevalue-editor_language.html"
+          },
+          {
+            "label": "Rows",
+            "description": "The number of rows which the editor should show.",
+            "key": "rows",
+            "view": "number"
+          },
+          {
+            "label": "Enable Import button",
+            "description": "Allows importing code from per-site snippet libraries.",
+            "key": "enableImportButton",
+            "view": "boolean"
+          }
+        ]
+      },
+      "defaultConfig": {
+        "language": "htmlmixed",
+        "rows": "25",
+        "enableImportButton": false
+      }
+    }
+  ]
+}

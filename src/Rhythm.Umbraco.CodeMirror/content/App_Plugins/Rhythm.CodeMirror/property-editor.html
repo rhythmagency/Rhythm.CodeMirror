@@ -1,0 +1,7 @@
+﻿<div class="rcm-editor" ng-controller="Rhythm.PropertyEditors.CodeMirrorController">
+    <input id="{{model.alias}}" class="rcm-editor__value" type="hidden" />
+    <div class="rcm-editor__toolbar" ng-if="showToolbar">
+        <a class="btn btn-info" href="" ng-if="model.config.enableImportButton" ng-click="openPicker()" prevent-default>Import ...</a>
+    </div>
+    <iframe class="rcm-editor__editor-frame" ng-src="{{frameUrl}}" ng-style="{height:editorHeight}"></iframe>
+</div>

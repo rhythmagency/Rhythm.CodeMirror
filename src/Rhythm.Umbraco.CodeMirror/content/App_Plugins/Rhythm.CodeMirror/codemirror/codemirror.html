@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="codemirror.css">
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0px;
+            border: 0px;
+            padding: 0px;
+            font-size: 14px;
+            line-height: 16px;
+        }
+        body > .CodeMirror {
+            height: 100%;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="codemirror.js"></script>
+    <script type="text/javascript">
+
+        let ScriptLoader = class {
+            constructor(scriptPaths, callback) {
+                this.scriptPaths = scriptPaths;
+                this.callback = callback;
+                this.loadedFlags = [];
+                var loader = this;
+                if (Array.isArray(scriptPaths))
+                    loader.scriptPaths.forEach(function (item, index) {
+                        loader.loadedFlags.push(false);
+                        var script = document.createElement('script');
+                        script.async = true;
+                        script.onload = function () { loader.onScriptLoaded(index); }
+                        script.src = item;
+                        document.body.appendChild(script);
+                    });
+            }
+            onScriptLoaded(scriptId) {
+                this.loadedFlags[scriptId] = true;
+                if (this.loadedFlags.every(flag => flag === true))
+                    this.callback();
+            }
+        };
+
+        $(function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var valueField = window.frameElement ? window.frameElement.parentElement.querySelector(".rcm-editor__value") : null;
+            var language = urlParams.has('lang') ? urlParams.get('lang') : "htmlmixed";
+            var editorConfig = {
+                lineNumbers: true,
+                mode: language,
+                value: valueField ? valueField.value : ""
+            };
+            var createEditor = function () {
+                var editor = CodeMirror(document.body, editorConfig);
+                if (valueField) {
+                    editor.on("change", function (editorinstance, changeObj) {
+                        valueField.value = editor.getValue();
+                        valueField.dispatchEvent(new Event('value-updated'));
+                    });
+                    $(document).on("value-imported", function () { editor.setValue(valueField.value); });
+                }
+            };
+            var scriptList = null;
+            switch (language) {
+                case "css":
+                    scriptList = ['modes/css.js'];
+                    break;
+                case "htmlmixed":
+                    scriptList = ['modes/css.js', 'modes/javascript.js', 'modes/xml.js', 'modes/htmlmixed.js'];
+                    break;
+                case "javascript":
+                    scriptList = ['modes/javascript.js'];
+                    break;
+                case "json":
+                    scriptList = ['modes/javascript.js'];
+                    editorConfig.mode = { name: "javascript", json: true };
+                    break;
+                case "jsonld":
+                    scriptList = ['modes/javascript.js'];
+                    editorConfig.mode = { name: "javascript", jsonld: true };
+                    break;
+                case "less":
+                    scriptList = ['modes/css.js'];
+                    editorConfig.mode = "text/x-less";
+                    break;
+                case "pug":
+                    scriptList = ['modes/pug.js'];
+                    break;
+                case "scss":
+                    scriptList = ['modes/css.js'];
+                    editorConfig.mode = "text/x-scss";
+                    break;
+                case "typescript":
+                    scriptList = ['modes/javascript.js'];
+                    editorConfig.mode = { name: "javascript", typescript: true };
+                    break;
+                case "xml":
+                    scriptList = ['modes/xml.js'];
+                    break;
+            }
+
+            if (scriptList)
+                var scriptLoader = new ScriptLoader(scriptList, createEditor);
+            else
+                createEditor();
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

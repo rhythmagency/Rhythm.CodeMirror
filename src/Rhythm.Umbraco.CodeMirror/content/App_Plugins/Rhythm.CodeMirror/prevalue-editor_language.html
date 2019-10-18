@@ -1,0 +1,28 @@
+﻿<div ng-controller="Rhythm.PrevalueEditors.CodeMirrorLanguageController">
+
+    <umb-control-group label="Language" description="Select language">
+        <div class="vertical-align-items">
+            <select ng-model="model.value">
+                <optgroup label="Markup">
+                    <option value="htmlmixed">HTML</option>
+                    <option value="pug">Pug / Jade</option>
+                </optgroup>
+                <optgroup label="Styling">
+                    <option value="css">CSS</option>
+                    <option value="less">LESS</option>
+                    <option value="scss">SCSS</option>
+                </optgroup>
+                <optgroup label="Scripting">
+                    <option value="javascript">JavaScript</option>
+                    <option value="typescript">TypeScript</option>
+                </optgroup>
+                <optgroup label="Data">
+                    <option value="json">JSON</option>
+                    <option value="jsonld">JSON-LD</option>
+                    <option value="xml">XML</option>
+                </optgroup>
+            </select>
+        </div>
+    </umb-control-group>
+
+</div>
